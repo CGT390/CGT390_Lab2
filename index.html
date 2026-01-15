@@ -120,7 +120,7 @@
     btnDeleteLast.addEventListener("click", () => {
       // TODO: remove the last element from items if any, then call render()
       if (items.length > 0) {
-        items.pop(list.lastElementChild);
+        items.pop();
       }
       render();
     });
@@ -130,11 +130,15 @@
       // TODO:
       // - find the closest <li> (e.target.closest("li"))
       const element = e.target.closest("li");
+      if (!element) return;
+
       // - read its data-id, find the matching item in items
-      const found = items.find(id => id = element.id);
-      found.done = true;
+      const id = parseInt(element.dataset.id);
+      const found = items.find(item => item.id === id);
+      if (!found) return;
 
       // - flip item.done (true/false), then call render()
+      found.done = !found.done;
       render();
     });
 
